@@ -1,0 +1,22 @@
+<h1>Register</h1>
+<%- message %>
+
+<form method="post" action="/users/register">
+
+    <p>
+        <label>Type in Username:</label>
+        <input type="text" name="username">
+    </p>
+    <p>
+        <label>Type in Password:</label>
+        <input type="text" name="password">
+    </p>
+    <p>
+        <label>Repeat Password:</label>
+        <input type="text" name="password2">
+    </p>
+    <p>
+        <input type="submit" value="Register">
+    </p>
+    <a href="/" class="nav_link">Home</a>
+</form>
