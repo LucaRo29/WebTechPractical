@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<header>
+    <a href="/" class="nav_link">Home</a>
+    <a href="/users/login" class="nav_link">Login</a>
+    <a href="/questions/new" class="nav_link">New question</a>
+    <div class="currentuser"><%= currentuser%></div>
+</header>
 <h1>Register</h1>
 <%- message %>
 
@@ -13,10 +22,19 @@
     </p>
     <p>
         <label>Repeat Password:</label>
-        <input type="text" name="password2">
+        <input type="text" name="passwordRepeat">
     </p>
     <p>
         <input type="submit" value="Register">
     </p>
-    <a href="/" class="nav_link">Home</a>
+
+
+
 </form>
+
+<footer>
+    <a href="/about" class="nav_link">About</a>
+
+</footer>
+</body>
+</html>

@@ -2,28 +2,88 @@ var express = require('express');
 var router = express.Router();
 const fs = require('fs');
 
-const { check, validationResult } = require('express-validator');
-
+const {check, validationResult} = require('express-validator');
+let user = 'Not logged in';
 
 /* GET users listing. */
-router.get('/new', function(req, res, next) {
-    //TODO check if logged in
-    res.render('new',{message : " Please create your question"});
+router.get('/new', function (req, res, next) {
+
+    if (req.session.loggedIn) {
+        user = req.session.username;
+        res.render('new', {message: " Please create your question", currentuser: 'Logged in as ' + user});
+    } else {
+        res.render('index', {message: "You have to be logged in to create a question!", currentuser: user});
+    }
+
 });
 
-router.post('/new',function(req, res, next) {
-    //TODO everything
-    res.render('index');
+router.post('/new', function (req, res, next) {
+
+    if (req.body.title.length === 0 || req.body.body.length === 0) {
+        res.render('new', {message: 'Please fill out the whole form', currentuser: user});
+    } else {
+        fs.readFile('DB/questions.json', function (err, data) {
+
+            if (data.length == 0) {
+                data = "[]";
+                fs.writeFile("DB/users.json", data, (err) => {
+
+                    if (err) {
+                        throw err;
+                    }
+
+                });
+            }
+
+            let questions = JSON.parse(data);
+            let ID = questions.length.toString();
+            let date = new Date(3600000*Math.floor(Date.now()/3600000));
+            let question = '{"'+ questions.length.toString()+
+                                    '":{ "OwnerUserId":'+ req.session.username+
+                                    ',"CreationDate":"'+date+
+                                    '","Score": "0",'+
+                                    '"Title":"'+ req.body.title+
+                                    '","Body":"'+req.body.body+'"}}';
+
+            questions.push(JSON.parse(question));
+
+            // let question = '{'+ questions.length.toString()+
+            //     ':{ \"OwnerUserId\":'+ req.session.username+
+            //     ',\"CreationDate\":'+date+
+            //     ',\"Score\": \"0\",'+
+            //     '\"Title\":'+ req.body.Title+
+            //     ',\"Body\":'+req.body.Body+'}}';
+
+            fs.writeFile("DB/questions.json", JSON.stringify(questions), (err) => {
+
+                if (err) {
+                    throw err;
+                } else {
+                    res.redirect(302, '/');
+
+                }
+            });
+
+
+            if (err) {
+                throw err;
+            }
+
+
+        });
+    }
+
+
+
 });
 
 
-
-// router.post('/register',[check('username').not().isEmpty(), check('password').not().isEmpty(), check('password2').not().isEmpty()] ,function(req, res, next) {
+// router.post('/register',[check('username').not().isEmpty(), check('password').not().isEmpty(), check('passwordrepeat').not().isEmpty()] ,function(req, res, next) {
 //
 //     var errors = validationResult(req);
 //     if(errors.isEmpty()){
 //
-//         if (req.body.password !== req.body.password2){
+//         if (req.body.password !== req.body.passwordrepeat){
 //             req.flash()
 //             res.render('register',{message : 'Passwords were different'});
 //         }

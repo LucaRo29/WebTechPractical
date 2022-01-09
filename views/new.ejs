@@ -1,4 +1,11 @@
-<h1>Create a new message</h1>
+<!DOCTYPE html>
+<html>
+<body>
+<header>
+    <a href="/" class="nav_link">Home</a>
+    <div class="currentuser"><%= currentuser %></div>
+</header>
+<h1>Post a new question</h1>
 <%- message %>
 
 <form method="post" action="/questions/new">
@@ -12,10 +19,15 @@
         <input type="text" name="body">
     </p>
     <p>
-        <input type="submit" value="Create">
+        <input type="submit" value="Post question">
     </p>
-    <a href="/" class="nav_link">Home</a>
-    <a href="../users/login" class="nav_link">Login</a>
-    <a href="../users/register" class="nav_link">Register</a>
-    <a href="../about" class="nav_link">About</a>
+
+
 </form>
+
+<footer>
+    <a href="/about" class="nav_link">About</a>
+
+</footer>
+</body>
+</html>

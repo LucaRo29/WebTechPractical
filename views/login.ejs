@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<header>
+    <a href="/" class="nav_link">Home</a>
+    <a href="/users/register" class="nav_link">Register</a>
+    <a href="/questions/new" class="nav_link">New question</a>
+    <div class="currentuser"><%= currentuser%></div>
+</header>
 <h1>Login</h1>
 <%- message %>
 
@@ -13,8 +22,12 @@
     <p>
         <input type="submit" value="Login">
     </p>
-    <a href="register" class="nav_link">Register</a>
-    <a href="/" class="nav_link">Home</a>
+
 </form>
 
+<footer>
+    <a href="/about" class="nav_link">About</a>
 
+</footer>
+</body>
+</html>

@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Stackunderflow</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <a href="users/login" class="nav_link">Login</a>
-    <a href="users/register" class="nav_link">Register</a>
-    <a href="questions/new" class="nav_link">New question</a>
-    <a href="about" class="nav_link">About</a>
+  <header>
+    <a href="/users/login" class="nav_link">Login</a>
+    <a href="/users/register" class="nav_link">Register</a>
+    <a href="/questions/new" class="nav_link">New question</a>
+    <div class="currentuser"><%= currentuser%></div>
+  </header>
+    <h1>Stackunderflow</h1>
+   <%if(typeof message != 'undefined'){ %>
+  <%- message %><%}%>
+
+
+
+
+  <footer>
+    <a href="/about" class="nav_link">About</a>
+
+  </footer>
   </body>
 </html>
