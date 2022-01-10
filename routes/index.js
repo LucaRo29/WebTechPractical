@@ -22,9 +22,9 @@ router.get('/', function (req, res, next) {
 
 
         let questions_sorted = JSON.parse(data);
-        questions_sorted.sort(function(a, b) {
-            return b.score - a.score;
-        });
+        // questions_sorted.sort(function(a, b) {
+        //     return b[].Score - a.Score;
+        // });
 
         let top5 = JSON.parse("[]");
 

@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
+//const bg = require('background.js');
 
 //TODO search
 let user = 'Not logged in';
+
+router.post('/search', function (req,res,next){
+        let searchedString = req.body.searchString;
+        return;
+});
 
 router.get('/get/(:id)', function (req, res, next) {
 
@@ -18,11 +24,7 @@ router.get('/get/(:id)', function (req, res, next) {
         fs.readFile('DB/answers.json', function (err, data) {
 
             let answers = JSON.parse(data);
-            let test = parseInt(req.params.id);
-            let test2 = typeof (req.params.id);
-            // if("0"===req.params.id){
-            //     return test2;
-            // }
+
             for (let i = 0; i < answers.length; i++) {
                 if (answers[i].qID == parseInt(req.params.id)) {
                     reqAnswers.push(answers[i]);
@@ -73,12 +75,13 @@ router.post('/new', function (req, res, next) {
 
             let questions = JSON.parse(data);
             let date = new Date(3600000 * Math.floor(Date.now() / 3600000));
-            let question = '{"qID":' + questions.length.toString() +
+            let ID = questions.length.toString();
+            let question = '{"'+ID+'":{"qID":' + questions.length.toString() +
                 ', "OwnerUserId":' + req.session.username +
                 ',"CreationDate":"' + date +
                 '","Score": "0",' +
-                '"title":"' + req.body.title +
-                '","body":"' + req.body.body + '"}';
+                '"Title":"' + req.body.title +
+                '","Body":"' + req.body.body + '"}}';
 
             questions.push(JSON.parse(question));
 
@@ -129,13 +132,14 @@ router.post('/answer/(:id)', function (req, res, next) {
             }
 
             let answers = JSON.parse(data);
+            let ID = questions.length.toString();
             let date = new Date(3600000 * Math.floor(Date.now() / 3600000));
-            let answer = '{"aID":' + answers.length.toString() +
+            let answer = '{"'+ID+'":{"aID":' + answers.length.toString() +
                 ',"qID":' + req.params.id +
                 ', "OwnerUserId":' + req.session.username +
                 ',"CreationDate":"' + date +
                 '","score": "0",' +
-                '"body":"' + req.body.body + '"}';
+                '"body":"' + req.body.body + '"}}';
 
             answers.push(JSON.parse(answer));
 
