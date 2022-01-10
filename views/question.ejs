@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stackunderflow</title>
+</head>
+<body>
+<header>
+    <a href="/" class="nav_link">Home</a>
+    <a href="/users/login" class="nav_link">Login</a>
+    <a href="/users/register" class="nav_link">Register</a>
+    <a href="/questions/new" class="nav_link">New question</a>
+    <div class="currentuser"><%= currentuser%></div>
+    <form id="form" method="post" action="search">
+        <input type="search" id="query" name="q" placeholder="Search...">
+        <button>Search</button>
+    </form>
+</header>
+
+
+
+<%if(typeof message != 'undefined'){ %>
+    <%- message %><%}%>
+
+<h1><%=question.title%></h1>
+<div class="body"><%=question.body%></div>
+
+<% if(answers.length){%>
+    <h3> Answers </h3>
+    <table class="answer_table">
+
+        <tbody>
+        <% for(let i = 0; i < answers.length; i++){%>
+            <tr>
+                <td><%= answers[i].body%></td>
+                <td><%= answers[i].score%></td>
+                <td><%= answers[i].OwnerUserId%></td>
+            </tr>
+        <%}%>
+        </tbody>
+    </table>
+<%
+}
+%>
+
+<form method="post" action="/questions/answer/<%= question.qID%>">
+
+    <p>
+        <label>Body:</label>
+        <input type="text" name="body">
+    </p>
+    <p>
+        <input type="submit" value="Post answer">
+    </p>
+
+
+</form>
+
+
+<footer>
+    <a href="/about" class="nav_link">About</a>
+
+</footer>
+</body>
+</html>

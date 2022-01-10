@@ -60,7 +60,7 @@ router.get('/register', function (req, res, next) {
 
     if (req.session.loggedIn) {
         user = 'Logged in as ' +req.session.username;
-        res.render('register', {message: " Please register an account",currentuser:  user});
+        res.render('register', {message: " Please register an account",currentuser: user});
     } else {
         res.render('register', {message: " Please register an account",currentuser: user});
     }
