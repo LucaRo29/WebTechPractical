@@ -10,8 +10,8 @@
     <a href="/users/register" class="nav_link">Register</a>
     <a href="/questions/new" class="nav_link">New question</a>
     <div class="currentuser"><%= currentuser%></div>
-    <form id="form" method="post" action="search">
-        <input type="search" id="query" name="q" placeholder="Search...">
+    <form id="form" method="post" action="/questions/search">
+        <input name="searchString" placeholder="Search...">
         <button>Search</button>
     </form>
 </header>
@@ -19,21 +19,42 @@
 
 
 <%if(typeof message != 'undefined'){ %>
-    <%- message %><%}%>
+    <%- message %><%}
 
-<h1><%=question.title%></h1>
-<div class="body"><%=question.body%></div>
+let body = question[id].Body;
+let title = question[id].Title;
+let actionQ = "/questions/questionClap/"+id
+
+%>
+<%if(typeof message != 'undefined'){ %>
+    <%- message %><%}%>
+<h1><%=title%></h1>
+
+<div class="qScore"><%=question[id].Score%></div>
+<form action="<%=actionQ%>">
+    <button class="answerClap" >Clap</button>
+</form>
 
 <% if(answers.length){%>
     <h3> Answers </h3>
     <table class="answer_table">
 
         <tbody>
-        <% for(let i = 0; i < answers.length; i++){%>
+        <% for(let x in answers){
+            let entries = Object.entries(answers[x]);
+            let actionA = "/questions/answerClap/"+ entries[0][0]+'&'+id;
+            console.log('test'+x);
+            console.log(answers[x][x].Score);
+
+
+        %>
             <tr>
-                <td><%= answers[i].body%></td>
-                <td><%= answers[i].score%></td>
-                <td><%= answers[i].OwnerUserId%></td>
+                <td><%= entries[0][1].Body%></td>
+                <td><%= answers[x][x].Score%></td>
+                <td><%= entries[0][1].OwnerUserId%></td>
+                <td> <form action="<%= actionA%>">
+                        <button class="answerClap" >Clap</button>
+                    </form></td>
             </tr>
         <%}%>
         </tbody>
@@ -42,7 +63,7 @@
 }
 %>
 
-<form method="post" action="/questions/answer/<%= question.qID%>">
+<form method="post" action="/questions/answer/<%= Object.entries(question)[0][0]%>">
 
     <p>
         <label>Body:</label>

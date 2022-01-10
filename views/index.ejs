@@ -28,11 +28,13 @@
       <tr><th>Title</th><th>Score</th><th>Posted by:</th></tr>
       </thead>
       <tbody>
-      <% for(let i = 0; i < questions.length; i++){%>
+      <% for(let x in questions){
+      let entries = Object.entries(questions[x]);
+     %>
         <tr>
-          <td><a href="/questions/get/<%= questions[i].qID%>"><%= questions[i].title %></a></td>
-          <td><%= questions[i].score%></td>
-          <td><%= questions[i].OwnerUserId%></td>
+          <td><a href="/questions/get/<%= entries[0][0]%>"><%= entries[0][1].Title %></a></td>
+          <td><%= entries[0][1].Score%></td>
+          <td><%= entries[0][1].OwnerUserId%></td>
         </tr>
       <%}%>
       </tbody>

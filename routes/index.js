@@ -22,26 +22,28 @@ router.get('/', function (req, res, next) {
 
 
         let questions_sorted = JSON.parse(data);
-        // questions_sorted.sort(function(a, b) {
-        //     return b[].Score - a.Score;
-        // });
+
+        questions_sorted.sort(function(a, b) {
+            let keya = Object.keys(a);
+            let keyb = Object.keys(b);
+            return  b[keyb].Score - a[keya].Score;
+        });
 
         let top5 = JSON.parse("[]");
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 5; i++) {
             top5.push(questions_sorted[i]);
         }
 
-        if(req.statusCode === 302 && !req.session.loggedIn){
-            user = req.session.username;
-            res.render('index', {message:'You have to login first',  currentuser: 'Logged in as ' + user, questions: top5});
-        }
-        else if (req.session.loggedIn) {
-            user = req.session.username;
-            res.render('index', {currentuser: 'Logged in as ' + user, questions: top5});
-        } else {
-            res.render('index', {currentuser: user, questions: top5});
-        }
+
+            if (req.session.loggedIn) {
+                user = req.session.username;
+                res.render('index', {currentuser: 'Logged in as ' + user, questions: top5});
+            } else {
+                res.render('index', {message: 'You have to be logged in to post a question',currentuser: user, questions: top5});
+            }
+
+
     })
 });
 

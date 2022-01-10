@@ -6,9 +6,63 @@ const fs = require('fs');
 //TODO search
 let user = 'Not logged in';
 
-router.post('/search', function (req,res,next){
-        let searchedString = req.body.searchString;
-        return;
+router.post('/search', function (req, res, next) {
+    let searchedString = req.body.searchString;
+    return;
+});
+router.get('/questionClap/(:id)', function (req, res, next) {
+
+    fs.readFile('DB/questions.json', function (err, data) {
+
+
+        let questions = JSON.parse(data);
+        //console.log(questions[req.params.id][req.params.id].Score  )
+        let questionScore = parseInt(questions[req.params.id][req.params.id].Score);
+        questionScore++;
+        questions[req.params.id][req.params.id].Score = questionScore;
+        //console.log(questions[req.params.id][req.params.id].Score  )
+
+        fs.writeFile("DB/questions.json", JSON.stringify(questions), (err) => {
+
+            if (err) {
+                throw err;
+            } else {
+                res.redirect(302, '/questions/get/' + req.params.id);
+
+            }
+        });
+
+    });
+
+});
+
+router.get('/answerClap/(:id)', function (req, res, next) {
+
+    fs.readFile('DB/answers.json', function (err, data) {
+
+
+        let paramarray = req.params.id.toString().split('&');
+        let aid = paramarray[0];
+        let qid = paramarray[1];
+        let answers = JSON.parse(data);
+
+        let questionScore = parseInt(answers[aid][aid].Score);
+        questionScore++;
+        answers[aid][aid].Score = questionScore;
+
+
+        fs.writeFile("DB/answers.json", JSON.stringify(answers), (err) => {
+
+            if (err) {
+                throw err;
+            } else {
+                res.redirect(302, '/questions/get/' + qid);
+
+            }
+        });
+
+    });
+
 });
 
 router.get('/get/(:id)', function (req, res, next) {
@@ -17,7 +71,7 @@ router.get('/get/(:id)', function (req, res, next) {
     fs.readFile('DB/questions.json', function (err, data) {
 
         let questions = JSON.parse(data);
-        reqQuestion = questions[req.params.id]
+        reqQuestion = questions[req.params.id];
 
 
         let reqAnswers = JSON.parse("[]")
@@ -25,18 +79,28 @@ router.get('/get/(:id)', function (req, res, next) {
 
             let answers = JSON.parse(data);
 
-            for (let i = 0; i < answers.length; i++) {
-                if (answers[i].qID == parseInt(req.params.id)) {
-                    reqAnswers.push(answers[i]);
+            for (let x in answers) {
+                let entries = Object.entries(answers[x]);
+                if (entries[0][1].ParentID == parseInt(req.params.id)) {
+                    reqAnswers.push(answers[x]);
                 }
             }
 
-            if (req.session.loggedIn) {
-                user = 'Logged in as ' + req.session.username;
-                res.render('question', {currentuser: user, question: reqQuestion, answers: reqAnswers});
-            } else {
-                res.render('question', {currentuser: user, question: reqQuestion, answers: reqAnswers});
-            }
+
+
+                if (req.session.loggedIn) {
+                    user = 'Logged in as ' + req.session.username;
+                    res.render('question', {currentuser: user, question: reqQuestion, answers: reqAnswers,id :req.params.id});
+                } else {
+                    res.render('question', {
+                        //message: 'You have to be logged in to post a question',
+                        currentuser: user,
+                        question: reqQuestion,
+                        answers: reqAnswers,
+                        id :req.params.id
+                    });
+                }
+
 
         });
     });
@@ -49,8 +113,10 @@ router.get('/new', function (req, res, next) {
         user = 'Logged in as ' + req.session.username;
         res.render('new', {message: " Please create your question", currentuser: user});
     } else {
-       res.redirect(302,'/');
-        // res.render('index', {message: "You have to be logged in to create a question!", currentuser: user});
+        // res.ERROR = 'Unauthorized';
+        // res.req.statusCode=401;
+        res.redirect(302, '/');
+        return;
     }
 
 });
@@ -76,8 +142,8 @@ router.post('/new', function (req, res, next) {
             let questions = JSON.parse(data);
             let date = new Date(3600000 * Math.floor(Date.now() / 3600000));
             let ID = questions.length.toString();
-            let question = '{"'+ID+'":{"qID":' + questions.length.toString() +
-                ', "OwnerUserId":' + req.session.username +
+            let question = '{"' + ID + '":{' +
+                ' "OwnerUserId":' + req.session.username +
                 ',"CreationDate":"' + date +
                 '","Score": "0",' +
                 '"Title":"' + req.body.title +
@@ -110,7 +176,9 @@ router.post('/new', function (req, res, next) {
 router.post('/answer/(:id)', function (req, res, next) {
 
     if (!req.session.loggedIn) {
-        res.render('index', {message: "You have to be logged in to post an answer!", currentuser: user});
+
+        req.ERROR = 'Unauthorized';
+        res.redirect('/questions/get/' + req.params.id);
         return;
     }
 
@@ -132,14 +200,14 @@ router.post('/answer/(:id)', function (req, res, next) {
             }
 
             let answers = JSON.parse(data);
-            let ID = questions.length.toString();
+            let ID = answers.length.toString();
             let date = new Date(3600000 * Math.floor(Date.now() / 3600000));
-            let answer = '{"'+ID+'":{"aID":' + answers.length.toString() +
-                ',"qID":' + req.params.id +
+            let answer = '{"' + ID + '":{' +
+                '"ParentID":' + req.params.id +
                 ', "OwnerUserId":' + req.session.username +
                 ',"CreationDate":"' + date +
-                '","score": "0",' +
-                '"body":"' + req.body.body + '"}}';
+                '","Score": "0",' +
+                '"Body":"' + req.body.body + '"}}';
 
             answers.push(JSON.parse(answer));
 
