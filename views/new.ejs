@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+<header>
+    <a href="/" class="nav_link">Home</a>
+    <div class="currentuser"><%= currentuser %></div>
+</header>
+<h1>Post a new question</h1>
+<%- message %>
+
+<form method="post" action="/questions/new">
+
+    <p>
+        <label>Title:</label>
+        <input type="text" name="title">
+    </p>
+    <p>
+        <label>Body:</label>
+        <input type="text" name="body">
+    </p>
+    <p>
+        <input type="submit" value="Post question">
+    </p>
+
+
+</form>
+
+<footer>
+    <a href="/about" class="nav_link">About</a>
+
+</footer>
+</body>
+</html>

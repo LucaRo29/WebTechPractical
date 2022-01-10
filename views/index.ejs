@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>Stackunderflow</title>
+
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <header>
+    <a href="/users/login" class="nav_link">Login</a>
+    <a href="/users/register" class="nav_link">Register</a>
+    <a href="/questions/new" class="nav_link">New question</a>
+    <div class="currentuser"><%= currentuser%></div>
+    <form id="form" method="post" action="search">
+      <input type="search" id="query" name="q" placeholder="Search...">
+      <button>Search</button>
+    </form>
+  </header>
+
+
+    <h1>Stackunderflow</h1>
+   <%if(typeof message != 'undefined'){ %>
+  <%- message %><%}%>
+
+  <% if(questions.length){%>
+    <h3> Top rated questions </h3>
+    <table class="question_table">
+      <thead>
+      <tr><th>Title</th><th>Score</th><th>Posted by:</th></tr>
+      </thead>
+      <tbody>
+      <% for(let i = 0; i < questions.length; i++){%>
+        <tr>
+          <td><a href="/questions/get/<%= questions[i].qID%>"><%= questions[i].title %></a></td>
+          <td><%= questions[i].score%></td>
+          <td><%= questions[i].OwnerUserId%></td>
+        </tr>
+      <%}%>
+      </tbody>
+    </table>
+  <%
+  }
+  %>
+
+
+
+
+  <footer>
+    <a href="/about" class="nav_link">About</a>
+
+  </footer>
   </body>
 </html>

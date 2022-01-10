@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+<header>
+    <a href="/" class="nav_link">Home</a>
+    <a href="/users/register" class="nav_link">Register</a>
+    <a href="/questions/new" class="nav_link">New question</a>
+    <div class="currentuser"><%= currentuser%></div>
+</header>
+<h1>Login</h1>
+<%- message %>
+
+<form method="post" action="login">
+    <p>
+        <label>Username:</label>
+        <input type="text" name="username">
+    </p>
+    <p>
+        <label>Password:</label>
+        <input type="text" name="password">
+    </p>
+    <p>
+        <input type="submit" value="Login">
+    </p>
+
+</form>
+
+<footer>
+    <a href="/about" class="nav_link">About</a>
+
+</footer>
+</body>
+</html>
