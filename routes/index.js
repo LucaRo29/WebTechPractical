@@ -17,55 +17,67 @@ router.get('/', function (req, res, next) {
                 }
             });
         }
-        if(data[0] !== 91){
-            data = '['+data+']';
+        if (data[0] !== 91) {
+            data = '[' + data + ']';
         }
 
 
         let questions_sorted = JSON.parse(data);
 
-        questions_sorted.sort(function(a, b) {
+        questions_sorted.sort(function (a, b) {
             let keya = Object.keys(a);
             let keyb = Object.keys(b);
-            return  b[keyb].Score - a[keya].Score;
+            return b[keyb].Score - a[keya].Score;
         });
 
         let top5 = JSON.parse("[]");
 
-        for (let i = 0; i < 5; i++) {
-            top5.push(questions_sorted[i]);
-        }
+        if (questions_sorted.length < 5) {
+            for (let i = 0; i < questions_sorted.length; i++) {
+                top5.push(questions_sorted[i]);
+            }
+        }else
+            {
+                for (let i = 0; i < 5; i++) {
+                    top5.push(questions_sorted[i]);
+                }
+            }
 
 
             if (req.session.loggedIn) {
                 user = req.session.username;
                 res.render('index', {currentuser: 'Logged in as ' + user, questions: top5});
             } else {
-                res.render('index', {message: 'You have to be logged in to post a question',currentuser: user, questions: top5});
+                res.render('index', {
+                    message: 'You have to be logged in to post a question',
+                    currentuser: user,
+                    questions: top5
+                });
             }
 
 
-    })
-});
+        }
+    )
+    });
 
-router.get('/about', function (req, res, next) {
-    res.render('about');
-});
+    router.get('/about', function (req, res, next) {
+        res.render('about');
+    });
 
-router.post('/search', function (req, res, next) {
-    res.render('about');
-});
+    router.post('/search', function (req, res, next) {
+        res.render('about');
+    });
 
 
-module.exports = router;
+    module.exports = router;
 
-function sortByProperty(property){
-    return function(a,b){
-        if(a[property] > b[property])
-            return 1;
-        else if(a[property] < b[property])
-            return -1;
+    function sortByProperty(property) {
+        return function (a, b) {
+            if (a[property] > b[property])
+                return 1;
+            else if (a[property] < b[property])
+                return -1;
 
-        return 0;
+            return 0;
+        }
     }
-}

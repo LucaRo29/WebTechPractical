@@ -21,7 +21,7 @@
    <%if(typeof message != 'undefined'){ %>
   <%- message %><%}%>
   <% console.log(questions.length)%>
-  <% if(!questions.length < 5){%>
+  <% if(questions.length != 0){%>
     <h3> Top rated questions </h3>
     <table class="question_table">
       <thead>
