@@ -1,7 +1,7 @@
 var express = require('express');
 const fs = require("fs");
 var router = express.Router();
-
+let unauthorized = false;
 /* GET home page. */
 router.get('/', function (req, res, next) {
     let user = 'Not logged in';
@@ -11,14 +11,15 @@ router.get('/', function (req, res, next) {
 
         if (data.length == 0) {
             data = "[]";
-            fs.writeFile("DB/users.json", data, (err) => {
+            fs.writeFile("DB/questions.json", data, (err) => {
                 if (err) {
                     throw err;
                 }
             });
         }
-
-        let questions = JSON.parse(data);
+        if(data[0] !== 91){
+            data = '['+data+']';
+        }
 
 
         let questions_sorted = JSON.parse(data);

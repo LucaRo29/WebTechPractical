@@ -77,6 +77,9 @@ router.get('/get/(:id)', function (req, res, next) {
         let reqAnswers = JSON.parse("[]")
         fs.readFile('DB/answers.json', function (err, data) {
 
+            if(data[0] !== 91){
+                data = '['+data+']';
+            }
             let answers = JSON.parse(data);
 
             for (let x in answers) {
@@ -93,7 +96,7 @@ router.get('/get/(:id)', function (req, res, next) {
                     res.render('question', {currentuser: user, question: reqQuestion, answers: reqAnswers,id :req.params.id});
                 } else {
                     res.render('question', {
-                        //message: 'You have to be logged in to post a question',
+                        // message: 'You have to be logged in to post a ',
                         currentuser: user,
                         question: reqQuestion,
                         answers: reqAnswers,

@@ -20,8 +20,8 @@
     <h1>Stackunderflow</h1>
    <%if(typeof message != 'undefined'){ %>
   <%- message %><%}%>
-
-  <% if(questions.length){%>
+  <% console.log(questions.length)%>
+  <% if(!questions.length < 5){%>
     <h3> Top rated questions </h3>
     <table class="question_table">
       <thead>
