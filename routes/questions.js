@@ -14,7 +14,7 @@ let user = 'Not logged in';
 // });
 router.get('/questionClap/(:id)', function (req, res, next) {
 
-    fs.readFile('DB/questions.json', function (err, data) {
+    fs.readFile('data/Questions.json', function (err, data) {
 
         data = data.toString().replaceAll(/\r|\n/g, '');
         let questions = JSON.parse(data);
@@ -24,7 +24,7 @@ router.get('/questionClap/(:id)', function (req, res, next) {
         questions[req.params.id].Score = questionScore;
 
 
-        fs.writeFile("DB/questions.json", JSON.stringify(questions), (err) => {
+        fs.writeFile("data/Questions.json", JSON.stringify(questions), (err) => {
 
             if (err) {
                 throw err;
@@ -40,7 +40,7 @@ router.get('/questionClap/(:id)', function (req, res, next) {
 
 router.get('/answerClap/(:id)', function (req, res, next) {
 
-    fs.readFile('DB/answers.json', function (err, data) {
+    fs.readFile('data/Answers.json', function (err, data) {
 
         data = data.toString().replaceAll(/\r|\n/g, '');
         let paramarray = req.params.id.toString().split('&');
@@ -53,7 +53,7 @@ router.get('/answerClap/(:id)', function (req, res, next) {
         answers[aid].Score = questionScore;
 
 
-        fs.writeFile("DB/answers.json", JSON.stringify(answers), (err) => {
+        fs.writeFile("data/Answers.json", JSON.stringify(answers), (err) => {
 
             if (err) {
                 throw err;
@@ -70,23 +70,20 @@ router.get('/answerClap/(:id)', function (req, res, next) {
 router.get('/get/(:id)', function (req, res, next) {
 
     let reqQuestion;
-    fs.readFile('DB/questions.json', function (err, data) {
+    fs.readFile('data/Questions.json', function (err, data) {
         data = data.toString().replaceAll(/\r|\n/g, '');
         let questions = JSON.parse(data);
         reqQuestion = questions[req.params.id];
 
 
         let reqAnswers = JSON.parse("{}");
-        fs.readFile('DB/answers.json', function (err, data) {
+        fs.readFile('data/Answers.json', function (err, data) {
             data = data.toString().replaceAll(/\r|\n/g, '');
-            // if(data[0] !== 91){
-            //     data = '['+data+']';
-            // }
             let answers = JSON.parse(data);
 
             for (let x in answers) {
                 //let entries = Object.entries(answers[x]);
-                if (parseInt(answers[x].ParentID) == parseInt(req.params.id)) {
+                if (answers[x].ParentId == parseInt(req.params.id)) {
                     reqAnswers[x]=answers[x];
                 }
             }
@@ -131,7 +128,7 @@ router.post('/new', function (req, res, next) {
     if (req.body.title.length === 0 || req.body.body.length === 0) {
         res.render('new', {message: 'Please fill out the whole form', currentuser: user});
     } else {
-        fs.readFile('DB/questions.json', function (err, data) {
+        fs.readFile('data/Questions.json', function (err, data) {
             data = data.toString().replaceAll(/\r|\n/g, '');
 
 
@@ -144,15 +141,15 @@ router.post('/new', function (req, res, next) {
 
             let ID = Object.keys(questions).length+1;
             let question = '{' +
-                ' "OwnerUserId":' + req.session.username +
-                ',"CreationDate":"' + dateTime +
+                ' "OwnerUserId":"' + req.session.username +
+                '","CreationDate":"' + dateTime +
                 '","Score": "0",' +
                 '"Title":"' + req.body.title +
                 '","Body":"' + req.body.body + '"}';
 
             questions[ID]=JSON.parse(question);
 
-            fs.writeFile("DB/questions.json", JSON.stringify(questions), (err) => {
+            fs.writeFile("data/Questions.json", JSON.stringify(questions), (err) => {
 
                 if (err) {
                     throw err;
@@ -186,7 +183,7 @@ router.post('/answer/(:id)', function (req, res, next) {
     if (req.body.body.length === 0) {
         res.render('new', {message: 'Please type in your answer', currentuser: user});
     } else {
-        fs.readFile('DB/answers.json', function (err, data) {
+        fs.readFile('data/Answers.json', function (err, data) {
 
             data = data.toString().replaceAll(/\r|\n/g, '');
 
@@ -198,8 +195,8 @@ router.post('/answer/(:id)', function (req, res, next) {
             var dateTime = date+' '+time;
             let ID = Object.keys(answers).length+1
             let answer =  '{' +
-                '"OwnerUserId":' + req.session.username +
-                ',"ParentID":' + req.params.id +
+                '"OwnerUserId":"' + req.session.username +
+                '","ParentId":' + req.params.id +
                 ',"CreationDate":"' + dateTime +
                 '","Score":"0",' +
                 '"Body":"' + req.body.body + '"}';
@@ -207,7 +204,7 @@ router.post('/answer/(:id)', function (req, res, next) {
 
             answers[ID]=JSON.parse(answer);
 
-            fs.writeFile("DB/answers.json", JSON.stringify(answers), (err) => {
+            fs.writeFile("data/Answers.json", JSON.stringify(answers), (err) => {
 
                 if (err) {
                     throw err;

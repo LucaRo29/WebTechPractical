@@ -10,7 +10,7 @@ let user = 'Not logged in';
 router.get('/', function (req, res, next) {
 
 
-    fs.readFile('data/Questions_head.json', function (err, data) {
+    fs.readFile('data/Questions.json', function (err, data) {
 
 
             data = data.toString().replaceAll(/\r|\n/g, '');
@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
             let datastring = data;
             datastring = '[' + datastring + ']'
             //datastring = datastring.replaceAll('"  },  "', '"}},{"');
-            datastring = datastring.replaceAll(/\"\s+\},\s+\"/g, '"}},{"');
+            datastring = datastring.replaceAll(/\"\s*\},\s*\"/g, '"}},{"');
             let questions_sorted = JSON.parse(datastring);
 
 
