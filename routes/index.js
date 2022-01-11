@@ -12,31 +12,16 @@ router.get('/', function (req, res, next) {
 
     fs.readFile('DB/questions.json', function (err, data) {
 
-            if (data.length == 0) {
-                data = "[]";
-                fs.writeFile("DB/questions.json", data, (err) => {
-                    if (err) {
-                        throw err;
-                    }
-                });
-            }
+
             data = data.toString().replaceAll(/\r|\n/g, '');
-            // if (data[0] !== 91) {
-            //     data = '[' + data + ']';
-            // }
+
 
             let datastring = data;
             datastring = '[' + datastring + ']'
-            datastring = datastring.replaceAll('"},"', '"}},{"')
+            datastring = datastring.replaceAll('"  },  "', '"}},{"');
+            datastring = datastring.replaceAll('"},"', '"}},{"');
             let questions_sorted = JSON.parse(datastring);
 
-            // let questions = JSON.parse(data);
-            // let id = Object.keys(questions_sorted).length
-            // test = questions_sorted[0];
-            // questions_sorted[questions_sorted.length] = questions_sorted[0];
-            // questions_sorted[4]= questions_sorted[0];
-
-            // questions_sorted.push(questions_sorted[0]);
 
             questions_sorted.sort(function (a, b) {
                 let keya = Object.keys(a);
@@ -50,28 +35,13 @@ router.get('/', function (req, res, next) {
             if (Object.keys(questions_sorted).length != 0) {
 
                 for (let i = 0; i < 5; i++) {
+
                     let id = Object.keys(questions_sorted[i])[0]
                     top5[id] = questions_sorted[i][id];
                 }
 
 
-                // for(let x in questions_sorted){
-                //     for(y in top5){
-                //
-                //         if
-                //     }
-                // }
             }
-
-            // if (questions_sorted.length < 5) {
-            //     for (let i = 0; i < questions_sorted.length; i++) {
-            //         top5.push(questions_sorted[i]);
-            //     }
-            // } else {
-            //     for (let i = 0; i < 5; i++) {
-            //         top5.push(questions_sorted[i]);
-            //     }
-            // }
 
 
             if (req.session.loggedIn) {
@@ -96,15 +66,15 @@ router.get('/about', function (req, res, next) {
 });
 
 router.post('/search', function (req, res, next) {
-        // //TODO render index with additional parameter query= true
-        // let searchedString = req.body.searchString;
-        // bg.calcQuery(searchedString, "data/word_vectors.txt", "data/entities.txt", (similarQuestions) => {
-        //     console.log(similarQuestions);
-        //     res.render('index', {
-        //         currentuser: user,
-        //         questions: similarQuestions,
-        //         query : true});
-        // });
+    // //TODO render index with additional parameter query= true
+    // let searchedString = req.body.searchString;
+    // bg.calcQuery(searchedString, "data/word_vectors.txt", "data/entities.txt", (similarQuestions) => {
+    //     console.log(similarQuestions);
+    //     res.render('index', {
+    //         currentuser: user,
+    //         questions: similarQuestions,
+    //         query : true});
+    // });
 
 });
 

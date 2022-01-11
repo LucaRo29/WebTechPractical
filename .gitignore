@@ -1,2 +1,8 @@
 # Project exclude paths
 /node_modules/
+/DB/answers.json
+/DB/answers1.json
+/DB/AnswersFULL.json
+/DB/questions.json
+/DB/questions1.json
+/DB/QuestionsFULL.json
