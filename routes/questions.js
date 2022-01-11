@@ -137,7 +137,7 @@ router.post('/new', function (req, res, next) {
 
             let questions = JSON.parse(data);
             let date = new Date(3600000 * Math.floor(Date.now() / 3600000));
-            let ID = Object.keys(questions).length
+            let ID = Object.keys(questions).length+1;
             let question = '{' +
                 ' "OwnerUserId":' + req.session.username +
                 ',"CreationDate":"' + date +
@@ -184,20 +184,11 @@ router.post('/answer/(:id)', function (req, res, next) {
         fs.readFile('DB/answers.json', function (err, data) {
 
             data = data.toString().replaceAll(/\r|\n/g, '');
-            // if (data.length == 0) {
-            //     data = "[]";
-            //     fs.writeFile("DB/answers.json", data, (err) => {
-            //
-            //         if (err) {
-            //             throw err;
-            //         }
-            //
-            //     });
-            // }
+
 
             let answers = JSON.parse(data);
             let date = new Date(3600000 * Math.floor(Date.now() / 3600000));
-            let ID = Object.keys(answers).length
+            let ID = Object.keys(answers).length+1
             let answer =  '{' +
                 '"OwnerUserId":' + req.session.username +
                 ',"ParentID":' + req.params.id +

@@ -30,6 +30,7 @@ console.log("test")
 <%if(typeof message != 'undefined'){ %>
     <%- message %><%}%>
 <h1><%=title%></h1>
+<div class="qBody"><%=question.Body%></div>
 
 <div class="qScore"><%=question.Score%></div>
 <form action="<%=actionQ%>">
@@ -48,7 +49,7 @@ console.log("test")
             let actionA = "/questions/answerClap/"+ x+'&'+id;
             console.log('test'+x);
             console.log(answers[x].Score);
-
+            console.log()
 
         %>
             <tr>
