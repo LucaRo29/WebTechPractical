@@ -1,44 +1,35 @@
-{
-  "0": {
-    "OwnerUserId": 0,
-    "CreationDate": "Mon Jan 10 2022 21:00:00 GMT+0100 (Central European Standard Time)",
-    "Score": 5,
-    "Title": "afa<f",
-    "Body": "sdf<s"
-  },
-  "1": {
-    "OwnerUserId": 1,
-    "CreationDate": "Mon Jan 10 2022 21:00:00 GMT+0100 (Central European Standard Time)",
-    "Score": "677",
-    "Title": "sfe<sfda",
-    "Body": "<sdfs<gsg"
-  },
-  "2": {
-    "OwnerUserId": 2,
-    "CreationDate": "Mon Jan 10 2022 21:00:00 GMT+0100 (Central European Standard Time)",
-    "Score": "3",
-    "Title": "<sdfysg",
-    "Body": "sydgsgag"
-  },
-  "3": {
-    "OwnerUserId": 2,
-    "CreationDate": "Mon Jan 10 2022 21:00:00 GMT+0100 (Central European Standard Time)",
-    "Score": "10",
-    "Title": "<sdfysg",
-    "Body": "sydgsgag"
-  },
-  "4": {
-    "OwnerUserId": 3,
-    "CreationDate": "Mon Jan 10 2022 21:00:00 GMT+0100 (Central European Standard Time)",
-    "Score": "0",
-    "Title": "END",
-    "Body": "END"
-  },
-  "5": {
-    "OwnerUserId": 1,
-    "CreationDate": "Tue Jan 11 2022 16:00:00 GMT+0100 (Central European Standard Time)",
-    "Score": "12",
-    "Title": "d<sdv",
-    "Body": "<sdf<f"
-  }
-}
+{"133960":{
+"OwnerUserId":56610.0,
+"CreationDate":"2015-01-18T19:52:56Z",
+"Score":1,
+"Title":"Proving Bayesian Network must be acyclic",
+"Body":"<p>I am struggling to prove that Bayesian Network must be acyclic. Could anyone help me in proving this? I am trying to prove by constructing a cyclic graph and showing some contradiction of probability distribution. But it's getting nowhere<\/p>\n"
+},
+"197549":{
+"OwnerUserId":105800.0,
+"CreationDate":"2016-02-20T00:48:21Z",
+"Score":0,
+"Title":"Low MSE, but negative $R^2$",
+"Body":"<p>I'm training some neural nets on my data and I get a satisfying MSE (compared to the variable scale I'm working with) and an anomalously negative $R^2$ value. What does the negative $R^2$ mean in this case, if the predictions are relatively accurate?<\/p>\n"
+},
+"233127":{
+"OwnerUserId":62559.0,
+"CreationDate":"2016-09-03T00:19:26Z",
+"Score":0,
+"Title":"Selecting between ARMA, GARCH and ARMA-GARCH models",
+"Body":"<p>I am following <a href=\"https:\/\/www.quantstart.com\/articles\/Generalised-Autoregressive-Conditional-Heteroskedasticity-GARCH-p-q-Models-for-Time-Series-Analysis\" rel=\"nofollow\">this tutorial<\/a> on ARIMA and GARCH modeling and I wanted to make sure I am interpreting the results correctly.<\/p>\n\n<p>ARMA model:<\/p>\n\n<pre><code>&gt; final.aic #-535902.3\n[1] -535902.3\n&gt; final.order #3 0 0\n[1] 3 0 0\n&gt; Box.test(resid(final.arma), lag=20, type=\"Ljung-Box\") #X-squared = 26.275, df = 20, p-value = 0.1569\n\n    Box-Ljung test\n\ndata:  resid(final.arma)\nX-squared = 26.275, df = 20, p-value = 0.1569\n<\/code><\/pre>\n\n<p>the $p$-value is greater than 0.05 and as such we CAN say that the residuals are a realisation of discrete white noise. Hence the autocorrelation in the residuals that is explained by the fitted ARMA model.<\/p>\n\n<p>GARCH model:<\/p>\n\n<pre><code>Box.test(resid(ftfinal.arima)^2, lag=20, type=\"Ljung-Box\") #p-value &lt; 2.2e-16 so correlation present?\n<\/code><\/pre>\n\n<p>IF there is evidence of serial correlation in the squared residuals, conclude that conditional heteroskedasticity is present in the original series.<\/p>\n\n<p>So my results seem to imply that: <\/p>\n\n<ol>\n<li>the autocorrelation in the model is explained by ARMA(3,0,0).... Would a GARCH model even add anything then?;<\/li>\n<li>there IS regular variability (heteroskedasticity) being explained by the GARCH model.<\/li>\n<\/ol>\n\n<p>So if I use a model with ARMA+GARCH it will explain more variance (and therefore predict better) than the two models individually?<\/p>\n"
+},
+"236740":{
+"OwnerUserId":132250.0,
+"CreationDate":"2016-09-24T20:31:48Z",
+"Score":2,
+"Title":"Correlation between two sets of traits (one with 3 variables, the other with 4 variables)",
+"Body":"<p>I have what seemed like a straight-forward analysis to conduct, but perhaps is not. I have two trait categories or sets - behavior, physiology of birds - that I wish to understand the relationship between.<\/p>\n\n<p>For the behavioral set I've measured three (somewhat related) variables, all quantitative. For the physiological set I've measured four (somewhat related) variables, all quantitative.<\/p>\n\n<p>What options do I have for reducing each of these two sets to a [single] dimension so that I can correlate the two? The additional challenge is that I do not have a large sample size ($N=25$ individual birds).<\/p>\n"
+},
+"14392":{
+"OwnerUserId":5865.0,
+"CreationDate":"2011-08-17T09:57:17Z",
+"Score":4,
+"Title":"Dynamic mean of randomly distributed events",
+"Body":"<p>The aim is to estimate an error on a stochastic event rate dynamically. <\/p>\n\n<p><a href=\"http:\/\/stats.stackexchange.com\/questions\/2894\/dynamic-calculation-of-number-of-samples-required-to-estimate-the-mean\">This Question<\/a> points in the same direction, I am interested in a theoretical extension.<\/p>\n\n<p>I read out the event counter second-wise, every black $1$ is a counted event (new events over time, see the plot below).<\/p>\n\n<p>During the measurement I am estimating the event rate, so as more statistics is accumulated, mean event rate (red) should asymptotically become more accurate. <\/p>\n\n<p><img src=\"http:\/\/i.stack.imgur.com\/lPFLq.png\" alt=\"dyn_mean1\"> <\/p>\n\n<p>As one can see, the mean value oscillates around true value of 0.5,<\/p>\n\n<p><img src=\"http:\/\/i.stack.imgur.com\/0VJKY.png\" alt=\"dyn_mean2\"><\/p>\n\n<p>even after one order of magnitude more events collected.<\/p>\n\n<p><strong>Practical question:<\/strong> How can one calculate the number of events needed to estimate the mean value to a maximum error ($0.5\\pm \\sigma$)? - <strong>answered (?) <a href=\"http:\/\/stats.stackexchange.com\/questions\/2894\/dynamic-calculation-of-number-of-samples-required-to-estimate-the-mean\/2898#2898\">here<\/a><\/strong> <\/p>\n\n<p><strong>Theoretical question:<\/strong> Can this oscillation be described analytically? Can you suggest further reading?<\/p>\n\n<p>The events are radiation counts, so they are uncorrelated, may by Poisson-distribution applied?<\/p>\n\n<p><strong>Addendum:<\/strong>\nIdealized first approximation - every 10th event is non-zero:\n<img src=\"http:\/\/i.stack.imgur.com\/iRD6Y.png\" alt=\"dyn_mean_reg1\"> <\/p>\n\n<p>May be this curve is superimposed with the realer-life example above, is any techniques of partitioning in arbitrary functions applicable here? <\/p>\n"
+}}
