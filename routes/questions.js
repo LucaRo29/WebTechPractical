@@ -136,11 +136,16 @@ router.post('/new', function (req, res, next) {
 
 
             let questions = JSON.parse(data);
-            let date = new Date(3600000 * Math.floor(Date.now() / 3600000));
+
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date+' '+time;
+
             let ID = Object.keys(questions).length+1;
             let question = '{' +
                 ' "OwnerUserId":' + req.session.username +
-                ',"CreationDate":"' + date +
+                ',"CreationDate":"' + dateTime +
                 '","Score": "0",' +
                 '"Title":"' + req.body.title +
                 '","Body":"' + req.body.body + '"}';
@@ -187,12 +192,15 @@ router.post('/answer/(:id)', function (req, res, next) {
 
 
             let answers = JSON.parse(data);
-            let date = new Date(3600000 * Math.floor(Date.now() / 3600000));
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date+' '+time;
             let ID = Object.keys(answers).length+1
             let answer =  '{' +
                 '"OwnerUserId":' + req.session.username +
                 ',"ParentID":' + req.params.id +
-                ',"CreationDate":"' + date +
+                ',"CreationDate":"' + dateTime +
                 '","Score":"0",' +
                 '"Body":"' + req.body.body + '"}';
 
