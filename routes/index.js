@@ -1,7 +1,7 @@
 var express = require('express');
 const fs = require("fs");
 var router = express.Router();
-//const bg = require("../background")
+const bg = require("../background")
 
 let unauthorized = false;
 
@@ -10,7 +10,7 @@ let user = 'Not logged in';
 router.get('/', function (req, res, next) {
 
 
-    fs.readFile('DB/questions.json', function (err, data) {
+    fs.readFile('data/Questions_head.json', function (err, data) {
 
 
             data = data.toString().replaceAll(/\r|\n/g, '');
@@ -18,8 +18,8 @@ router.get('/', function (req, res, next) {
 
             let datastring = data;
             datastring = '[' + datastring + ']'
-            datastring = datastring.replaceAll('"  },  "', '"}},{"');
-            datastring = datastring.replaceAll('"},"', '"}},{"');
+            //datastring = datastring.replaceAll('"  },  "', '"}},{"');
+            datastring = datastring.replaceAll(/\"\s+\},\s+\"/g, '"}},{"');
             let questions_sorted = JSON.parse(datastring);
 
 
@@ -39,7 +39,6 @@ router.get('/', function (req, res, next) {
                     let id = Object.keys(questions_sorted[i])[0]
                     top5[id] = questions_sorted[i][id];
                 }
-
 
             }
 
@@ -67,14 +66,13 @@ router.get('/about', function (req, res, next) {
 
 router.post('/search', function (req, res, next) {
     // //TODO render index with additional parameter query= true
-    // let searchedString = req.body.searchString;
-    // bg.calcQuery(searchedString, "data/word_vectors.txt", "data/entities.txt", (similarQuestions) => {
-    //     console.log(similarQuestions);
-    //     res.render('index', {
-    //         currentuser: user,
-    //         questions: similarQuestions,
-    //         query : true});
-    // });
+    let searchedString = req.body.searchString;
+    bg.calcQuery(searchedString, "data/word_vectors.txt", "data/entities.txt", (similarQuestions) => {
+        res.render('index', {
+            currentuser: user,
+            questions: JSON.parse(similarQuestions),
+            query : true});
+    });
 
 });
 

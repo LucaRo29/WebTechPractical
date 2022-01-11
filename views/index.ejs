@@ -41,7 +41,9 @@
       <%}%>
       </tbody>
     </table>
-  <%}else{%>
+  <%}else{
+  console.log("test");
+  %>
 
     <h3> Most similar questions based on your query</h3>
   <table class="question_table">
@@ -49,8 +51,10 @@
       <tr><th>Title</th><th>Score</th><th>Posted by:</th></tr>
     </thead>
   <tbody>
-  <% for(let x in questions){
+  <%
+  for(let x in questions){
     let entries = Object.entries(questions[x]);
+
   %>
   <tr>
     <td><a href="/questions/get/<%= questions[x]%>"><%= questions[x].Title %></a></td>
