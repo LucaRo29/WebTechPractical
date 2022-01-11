@@ -1,86 +1,102 @@
 var express = require('express');
 const fs = require("fs");
 var router = express.Router();
-let unauthorized = false;
+
+let user = 'Not logged in';
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    let user = 'Not logged in';
 
 
     fs.readFile('DB/questions.json', function (err, data) {
 
-        if (data.length == 0) {
-            data = "[]";
-            fs.writeFile("DB/questions.json", data, (err) => {
-                if (err) {
-                    throw err;
-                }
-            });
-        }
-        if (data[0] !== 91) {
-            data = '[' + data + ']';
-        }
-
-
-        let questions_sorted = JSON.parse(data);
-
-        questions_sorted.sort(function (a, b) {
-            let keya = Object.keys(a);
-            let keyb = Object.keys(b);
-            return b[keyb].Score - a[keya].Score;
-        });
-
-        let top5 = JSON.parse("[]");
-
-        if (questions_sorted.length < 5) {
-            for (let i = 0; i < questions_sorted.length; i++) {
-                top5.push(questions_sorted[i]);
+            if (data.length == 0) {
+                data = "[]";
+                fs.writeFile("DB/questions.json", data, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                });
             }
-        }else
-            {
+            // if (data[0] !== 91) {
+            //     data = '[' + data + ']';
+            // }
+
+
+            let questions_sorted = JSON.parse(data);
+            let id = Object.keys(questions_sorted).length
+            test = questions_sorted[0];
+            // questions_sorted[questions_sorted.length] = questions_sorted[0];
+            // questions_sorted[4]= questions_sorted[0];
+
+           // questions_sorted.push(questions_sorted[0]);
+
+            // questions_sorted.sort(function (a, b) {
+            //     let keya = Object.keys(a);
+            //     let keyb = Object.keys(b);
+            //     return b[keyb].Score - a[keya].Score;
+            // });
+
+            let top5 = JSON.parse("{}");
+
+            if(Object.keys(questions_sorted).length != 0){
+
                 for (let i = 0; i < 5; i++) {
-                    top5.push(questions_sorted[i]);
+                    top5[i]=questions_sorted[i];
                 }
+
+
+                // for(let x in questions_sorted){
+                //     for(y in top5){
+                //
+                //         if
+                //     }
+                // }
             }
+
+            // if (questions_sorted.length < 5) {
+            //     for (let i = 0; i < questions_sorted.length; i++) {
+            //         top5.push(questions_sorted[i]);
+            //     }
+            // } else {
+            //     for (let i = 0; i < 5; i++) {
+            //         top5.push(questions_sorted[i]);
+            //     }
+            // }
 
 
             if (req.session.loggedIn) {
                 user = req.session.username;
-                res.render('index', {currentuser: 'Logged in as ' + user, questions: top5, query :false});
+                res.render('index', {currentuser: 'Logged in as ' + user, questions: top5, query: false});
             } else {
                 res.render('index', {
                     message: 'You have to be logged in to post a question',
                     currentuser: user,
                     questions: top5
-                    , query :false
+                    , query: false
                 });
             }
 
 
         }
     )
+});
+
+router.get('/about', function (req, res, next) {
+    res.render('about');
+});
+
+router.post('/search', function (req, res, next) {
+    //TODO render index with additional parameter query= true
+    let searchedString = req.body.searchString;
+    res.render('index', {
+        currentuser: user,
+        questions: similarquestions
+        , query: true
     });
 
-    router.get('/about', function (req, res, next) {
-        res.render('about');
-    });
-
-    router.post('/search', function (req, res, next) {
-        //TODO render index with additional parameter query= true
-        let searchedString = req.body.searchString;
-
-    });
+});
 
 
-    module.exports = router;
+module.exports = router;
 
-    function sortByProperty(property) {
-        return function (a, b) {
-            if (a[property] > b[property])
-                return 1;
-            else if (a[property] < b[property])
-                return -1;
 
-            return 0;
-        }
-    }

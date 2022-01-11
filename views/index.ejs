@@ -20,8 +20,8 @@
     <h1>Stackunderflow</h1>
    <%if(typeof message != 'undefined'){ %>
   <%- message %><%}%>
-  <% console.log(questions.length)%>
-  <% if(questions.length != 0){
+  <% console.log()%>
+  <% if( Object.keys(questions).length != 0){
 
   if (!query){%>
     <h3> Top rated questions </h3>
@@ -31,12 +31,12 @@
       </thead>
       <tbody>
       <% for(let x in questions){
-      let entries = Object.entries(questions[x]);
+
      %>
         <tr>
-          <td><a href="/questions/get/<%= entries[0][0]%>"><%= entries[0][1].Title %></a></td>
-          <td><%= entries[0][1].Score%></td>
-          <td><%= entries[0][1].OwnerUserId%></td>
+          <td><a href="/questions/get/<%= x%>"><%= questions[x].Title %></a></td>
+          <td><%= questions[x].Score%></td>
+          <td><%= questions[x].OwnerUserId %></td>
         </tr>
       <%}%>
       </tbody>
@@ -53,9 +53,9 @@
     let entries = Object.entries(questions[x]);
   %>
   <tr>
-    <td><a href="/questions/get/<%= entries[0][0]%>"><%= entries[0][1].Title %></a></td>
-    <td><%= entries[0][1].Score%></td>
-    <td><%= entries[0][1].OwnerUserId%></td>
+    <td><a href="/questions/get/<%= questions[x]%>"><%= questions[x].Title %></a></td>
+    <td><%= questions[x].Score%></td>
+    <td><%=questions[x].OwnerUserId%></td>
   </tr>
   <%}%>
   </tbody>
