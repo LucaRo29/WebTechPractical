@@ -59,6 +59,7 @@ function exportSearch(_callback) {
         const objQuestions = JSON.parse(jsonQuestions);
         let out = "{";
         for (let elem in jsonSearch) {
+            if (jsonSearch[elem].word === undefined) break;
             let answerID = jsonSearch[elem].word.toString().substr(1);
             let questionID = objAnswers[answerID].ParentId;
             out = out + '"' + questionID + '":' + JSON.stringify(objQuestions[questionID]);

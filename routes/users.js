@@ -24,7 +24,7 @@ router.post('/login', (req, res, next) => {
         res.render('login', {message: 'Please fill out the whole form',currentuser: user});
 
     } else {
-        fs.readFile('DB/users.json', function (err, data) {
+        fs.readFile('data/users.json', function (err, data) {
 
             let users = JSON.parse(data);
 
@@ -82,11 +82,11 @@ router.post('/register', function (req, res, next) {
             return;
         }
 
-        fs.readFile('DB/users.json', function (err, data) {
+        fs.readFile('data/users.json', function (err, data) {
 
             if (data.length == 0) {
                 data = "[]";
-                fs.writeFile("DB/users.json", data, (err) => {
+                fs.writeFile("data/users.json", data, (err) => {
 
                     if (err) {
                         throw err;
@@ -110,7 +110,7 @@ router.post('/register', function (req, res, next) {
             if (!found) {
                 users.push({username: req.body.username, password: req.body.password});
 
-                fs.writeFile("DB/users.json", JSON.stringify(users), (err) => {
+                fs.writeFile("data/users.json", JSON.stringify(users), (err) => {
 
                     if (err) {
                         throw err;
