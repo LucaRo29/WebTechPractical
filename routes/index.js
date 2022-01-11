@@ -1,6 +1,9 @@
 var express = require('express');
 const fs = require("fs");
 var router = express.Router();
+const bg = require("../background")
+
+let unauthorized = false;
 
 let user = 'Not logged in';
 /* GET home page. */
@@ -85,14 +88,16 @@ router.get('/about', function (req, res, next) {
     res.render('about');
 });
 
-router.post('/search', function (req, res, next) {
-    //TODO render index with additional parameter query= true
-    let searchedString = req.body.searchString;
-    res.render('index', {
-        currentuser: user,
-        questions: similarquestions
-        , query: true
-    });
+    router.post('/search', function (req, res, next) {
+        //TODO render index with additional parameter query= true
+        let searchedString = req.body.searchString;
+        bg.calcQuery(searchedString, "data/word_vectors.txt", "data/entities.txt", (similarQuestions) => {
+            console.log(similarQuestions);
+            res.render('index', {
+                currentuser: user,
+                questions: similarQuestions,
+                query : true});
+        });
 
 });
 
