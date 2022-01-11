@@ -6,10 +6,12 @@ const fs = require('fs');
 //TODO search
 let user = 'Not logged in';
 
-router.post('/search', function (req, res, next) {
-    let searchedString = req.body.searchString;
-    return;
-});
+// router.post('/search', function (req, res, next) {
+//     let searchedString = req.body.searchString;
+//
+//
+//     return;
+// });
 router.get('/questionClap/(:id)', function (req, res, next) {
 
     fs.readFile('DB/questions.json', function (err, data) {
@@ -233,43 +235,5 @@ router.post('/answer/(:id)', function (req, res, next) {
     }
 });
 
-// router.post('/register',[check('username').not().isEmpty(), check('password').not().isEmpty(), check('passwordrepeat').not().isEmpty()] ,function(req, res, next) {
-//
-//     var errors = validationResult(req);
-//     if(errors.isEmpty()){
-//
-//         if (req.body.password !== req.body.passwordrepeat){
-//             req.flash()
-//             res.render('register',{message : 'Passwords were different'});
-//         }
-//         // fs.readFile('results.json', function (err, data) {
-//         //   var json = JSON.parse(data)
-//         //   json.push('search result: ' + currentSearchResult)
-//
-//         fs.readFile('DB/users.json', function(err, data) {
-//
-//             var users = JSON.parse(data)
-//
-//             let found = false;
-//             for (let i = 0; i < users.length; i++) {
-//                 // Check each id against the newThing
-//                 if (users[i].username === req.body.username) {
-//                     found = true;
-//                     console.log('username already exists');
-//                     res.render('register',{message : 'Username is already taken'});
-//                 }
-//             }
-//
-//             users.push({username:req.body.username,password:req.body.password});
-//
-//             fs.writeFile("DB/users.json", JSON.stringify(users),(err) =>{
-//
-//                 if(err)throw err;});
-//
-//             res.redirect(302, 'login');
-//         })}else{
-//         res.render('register',{message : 'Please fill out the whole form'});
-//     }
-//
-// });
+
 module.exports = router;

@@ -5,7 +5,7 @@ let unauthorized = false;
 /* GET home page. */
 router.get('/', function (req, res, next) {
     let user = 'Not logged in';
-//TODO login first
+
 
     fs.readFile('DB/questions.json', function (err, data) {
 
@@ -46,12 +46,13 @@ router.get('/', function (req, res, next) {
 
             if (req.session.loggedIn) {
                 user = req.session.username;
-                res.render('index', {currentuser: 'Logged in as ' + user, questions: top5});
+                res.render('index', {currentuser: 'Logged in as ' + user, questions: top5, query :false});
             } else {
                 res.render('index', {
                     message: 'You have to be logged in to post a question',
                     currentuser: user,
                     questions: top5
+                    , query :false
                 });
             }
 
@@ -65,7 +66,9 @@ router.get('/', function (req, res, next) {
     });
 
     router.post('/search', function (req, res, next) {
-        res.render('about');
+        //TODO render index with additional parameter query= true
+        let searchedString = req.body.searchString;
+
     });
 
 
