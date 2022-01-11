@@ -2,20 +2,35 @@
 <html>
 <head>
     <title>About</title>
-
+    <script src="/jquery/jquery-slim.js"></script>
+    <script src="/bootstrap/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css" type="text/css">
 </head>
 <body>
 <header>
-    <a href="/" class="nav_link">Home</a>
-    <form id="form" method="post" action="/questions/search">
-        <input name="searchString" placeholder="Search...">
-        <button>Search</button>
-    </form>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h1 class="navbar-brand">Stackunderflow</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <a href="/" class="btn-light">Home</a>
+            </ul>
+        </div>
+        <form class="form-inline" id="form" method="post" action="/search">
+            <input class="form-control mr-sm-2" name="searchString" placeholder="Search...">
+            <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+        </form>
+    </nav>
 </header>
-<h1>About us</h1>
-<p>Luca Rodiga 1620972, Implemented the express app</p>
-<p>Christopher Fartek 01431665, Implemented the word2vec functionalities</p>
-<p>risbom</p>
-
+<div class="card">
+    <div class="card-header">
+        <h1 style="text-align: center">About us</h1>
+    </div>
+    <p style="text-align: center">Luca Rodiga 1620972, Implemented the express app</p>
+    <p style="text-align: center">Christopher Fartek 01431665, Implemented the word2vec functionalities</p>
+    <p style="text-align: center">risbom 11736063, Implemented the Styling</p>
+</div>
 </body>
 </html>

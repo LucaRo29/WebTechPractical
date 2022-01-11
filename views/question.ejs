@@ -1,26 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stackunderflow</title>
+    <title>Question</title>
+    <script src="/jquery/jquery-slim.js"></script>
+    <script src="/bootstrap/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css" type="text/css">
 </head>
 <body>
 <header>
-    <a href="/" class="nav_link">Home</a>
-    <a href="/users/login" class="nav_link">Login</a>
-    <a href="/users/register" class="nav_link">Register</a>
-    <a href="/questions/new" class="nav_link">New question</a>
-    <div class="currentuser"><%= currentuser%></div>
-    <form id="form" method="post" action="/questions/search">
-        <input name="searchString" placeholder="Search...">
-        <button>Search</button>
-    </form>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h1 class="navbar-brand" style="padding-bottom: 8px; margin-bottom: 0">Stackunderflow</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" style="display: inline-flex;flex-wrap: wrap;gap: 5rem;flex-shrink:0;">
+                <li class="btn-light">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="btn-light">
+                    <a href="/users/login" class="nav-link">Login</a>
+                </li>
+                <li class="btn-light">
+                    <a href="/users/register" class="nav-link">Register</a>
+                </li>
+                <li class="btn-light">
+                    <a href="/questions/new" class="nav-link">New question</a>
+                </li>
+            </ul>
+            <div class="currentuser"><%= currentuser%></div>
+            <form class="form-inline" id="form" method="post" action="/search" style="float: right">
+                <input class="form-control mr-sm-2" name="searchString" placeholder="Search...">
+                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+            </form>
+        </div>
+    </nav>
 </header>
-
-
-
 <%if(typeof message != 'undefined'){ %>
     <%- message %><%}
-
 let body = question.Body;
 let title = question.Title;
 let actionQ = "/questions/questionClap/"+id;
@@ -29,62 +46,68 @@ console.log("test")
 %>
 <%if(typeof message != 'undefined'){ %>
     <%- message %><%}%>
-<h1><%=title%></h1>
-<div class="qBody"><%=question.Body%></div>
-
-<div class="qScore"><%=question.Score%></div>
-<form action="<%=actionQ%>">
-    <button class="answerClap" >Clap</button>
-</form>
-
-<% if(Object.keys(answers).length){
-    console.log("test2")
-%>
-    <h3> Answers </h3>
-    <table class="answer_table">
-
-        <tbody>
+<div class="card">
+    <div class="card-header">
+        <h1><%=title%></h1>
+    </div>
+    <div class="card-body">
+        <div class="card">
+            <div class="qBody"><%=question.Body%></div>
+        </div>
+        <div class="input-group mb-3" style="padding-top: 1rem">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><strong><%=question.Score%></strong></span>
+            </div>
+            <form action="<%=actionQ%>">
+                <button class="btn btn-success" >Clap</button>
+            </form>
+        </div>
+        <% if(Object.keys(answers).length){
+            console.log("test2")
+        %>
+        <h3> Answers </h3>
         <% for(let x in answers){
-
             let actionA = "/questions/answerClap/"+ x+'&'+id;
             console.log('test'+x);
             console.log(answers[x].Score);
             console.log()
 
         %>
-            <tr>
-                <td><%= answers[x].Body%></td>
-                <td><%= answers[x].Score%></td>
-                <td><%= answers[x].OwnerUserId%></td>
-                <td> <form action="<%= actionA%>">
-                        <button class="answerClap" >Clap</button>
-                    </form></td>
-            </tr>
+        <div class="card">
+            <div class="card-body">
+                <%= answers[x].Body%>
+                by Author<strong> <%= answers[x].OwnerUserId%></strong>
+            </div>
+            <div class="card-footer">
+                <div class="input-group mb-3" style="padding-top: 1rem">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><strong><%= answers[x].Score%></strong></span>
+                    </div>
+                    <form action="<%=actionA%>">
+                        <button class="btn btn-success" >Clap</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         <%}%>
-        </tbody>
-    </table>
-<%
-
-}
-%>
-
-<form method="post" action="/questions/answer/<%= id%>">
-
-    <p>
-        <label>Body:</label>
-        <input type="text" name="body">
-    </p>
-    <p>
-        <input type="submit" value="Post answer">
-    </p>
-
-
-</form>
-
-
-<footer>
-    <a href="/about" class="nav_link">About</a>
-
+        <%
+        }
+        %>
+        <div id="postAnswer" class="card col-sm-2 px-2" style="margin-top: 4rem">
+            <form method="post" action="/questions/answer/<%= id%>">
+                <p>
+                    <label>Write your answer :</label>
+                    <input class="form-control mr-sm-2" type="text" name="body">
+                </p>
+                <p>
+                    <input class="btn btn-success" type="submit" value="Post answer">
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+<footer style="position:fixed; bottom: 0;">
+    <a href="/about" class="nav_link" style="margin: 0 auto">About</a>
 </footer>
 </body>
 </html>

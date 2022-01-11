@@ -1,33 +1,66 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Log-In</title>
+    <script src="/jquery/jquery-slim.js"></script>
+    <script src="/bootstrap/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css" type="text/css">
+</head>
 <body>
 <header>
-    <a href="/" class="nav_link">Home</a>
-    <a href="/users/register" class="nav_link">Register</a>
-    <a href="/questions/new" class="nav_link">New question</a>
-    <div class="currentuser"><%= currentuser%></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h1 class="navbar-brand" style="padding-bottom: 8px; margin-bottom: 0">Stackunderflow</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" style="display: inline-flex;flex-wrap: wrap;gap: 5rem;flex-shrink:0;">
+                <li class="btn-light">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="btn-light">
+                    <a href="/users/login" class="nav-link">Login</a>
+                </li>
+                <li class="btn-light">
+                    <a href="/users/register" class="nav-link">Register</a>
+                </li>
+                <li class="btn-light">
+                    <a href="/questions/new" class="nav-link">New question</a>
+                </li>
+            </ul>
+            <div class="currentuser"><%= currentuser%></div>
+            <form class="form-inline" id="form" method="post" action="/search" style="float: right">
+                <input class="form-control mr-sm-2" name="searchString" placeholder="Search...">
+                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+            </form>
+        </div>
+    </nav>
 </header>
-<h1>Login</h1>
-<%- message %>
-
-<form method="post" action="login">
-    <p>
-        <label>Username:</label>
-        <input type="text" name="username">
-    </p>
-    <p>
-        <label>Password:</label>
-        <input type="text" name="password">
-    </p>
-    <p>
-        <input type="submit" value="Login">
-    </p>
-
-</form>
-
-<footer>
-    <a href="/about" class="nav_link">About</a>
-
-</footer>
+<div class="row justify-content-center" style="padding-top: 50px">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h1>Login</h1>
+                <%- message %>
+            </div>
+            <div class="card-body">
+                <form method="post" action="login">
+                    <p>
+                        <label>Username:</label>
+                        <input class="form-control mr-sm-2" type="text" name="username">
+                    </p>
+                    <p>
+                        <label>Password:</label>
+                        <input class="form-control mr-sm-2" type="text" name="password">
+                    </p>
+                    <p>
+                        <input class="btn btn-success" type="submit" value="Login">
+                    </p>
+                </form>
+            </div>
+        </div>
+        <footer style="position:fixed; bottom: 0;">
+            <a href="/about" class="nav_link" style="margin: 0 auto">About</a>
+        </footer>
 </body>
 </html>

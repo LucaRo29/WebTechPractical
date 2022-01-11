@@ -1,78 +1,94 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Stackunderflow</title>
-
-  </head>
-  <body>
-  <header>
-    <a href="/users/login" class="nav_link">Login</a>
-    <a href="/users/register" class="nav_link">Register</a>
-    <a href="/questions/new" class="nav_link">New question</a>
-    <div class="currentuser"><%= currentuser%></div>
-    <form id="form" method="post" action="/search">
-      <input name="searchString" placeholder="Search...">
-      <button>Search</button>
-    </form>
-  </header>
-
-
-    <h1>Stackunderflow</h1>
-   <%if(typeof message != 'undefined'){ %>
-  <%- message %><%}%>
-  <% console.log()%>
-  <% if( Object.keys(questions).length != 0){
-
-  if (!query){%>
-    <h3> Top rated questions </h3>
+<head>
+  <title>Stackunderflow</title>
+  <script src="/jquery/jquery-slim.js"></script>
+  <script src="/bootstrap/bootstrap.bundle.js"></script>
+  <link rel="stylesheet" href="/bootstrap/bootstrap.css" type="text/css">
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <h1 class="navbar-brand" style="padding-bottom: 8px; margin-bottom: 0">Stackunderflow</h1>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto" style="display: inline-flex;flex-wrap: wrap;gap: 5rem;flex-shrink:0;">
+        <li class="btn-light">
+          <a href="/users/login" class="nav-link">Login</a>
+        </li>
+        <li class="btn-light">
+          <a href="/users/register" class="nav-link">Register</a>
+        </li>
+        <li class="btn-light">
+          <a href="/questions/new" class="nav-link">New question</a>
+        </li>
+      </ul>
+      <div class="currentuser"><%= currentuser%></div>
+      <form class="form-inline" id="form" method="post" action="/search" style="float: right">
+        <input class="form-control mr-sm-2" name="searchString" placeholder="Search...">
+        <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+      </form>
+    </div>
+  </nav>
+</header>
+<%if(typeof message != 'undefined'){ %>
+<div class="alert alert-info" role="alert" class="alert-danger" style="text-align: center;"><%- message %><%}%></div>
+<% console.log()%>
+<% if( Object.keys(questions).length != 0){
+if (!query){%>
+<div class="card">
+  <div class="card-header">
+    <h3 style="text-align: center;"> Top rated questions </h3>
+  </div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Score</th>
+      <th>Posted by:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(let x in questions){
+    %>
+      <tr>
+        <td><a href="/questions/get/<%= x%>"><%= questions[x].Title %></a></td>
+        <td><%= questions[x].Score%></td>
+        <td><%= questions[x].OwnerUserId %></td>
+      </tr>
+    <%}%>
+    </tbody>
+  </table>
+  <%}else{
+  %>
+    <h3> Most similar questions based on your query</h3>
     <table class="question_table">
       <thead>
-      <tr><th>Title</th><th>Score</th><th>Posted by:</th></tr>
+      <tr>
+        <th>Title</th>
+        <th>Score</th>
+        <th>Posted by:</th>
+      </tr>
       </thead>
       <tbody>
       <% for(let x in questions){
-
-     %>
+      %>
         <tr>
           <td><a href="/questions/get/<%= x%>"><%= questions[x].Title %></a></td>
           <td><%= questions[x].Score%></td>
-          <td><%= questions[x].OwnerUserId %></td>
+          <td><%=questions[x].OwnerUserId%></td>
         </tr>
       <%}%>
       </tbody>
     </table>
-  <%}else{
-
-  %>
-
-    <h3> Most similar questions based on your query</h3>
-  <table class="question_table">
-    <thead>
-      <tr><th>Title</th><th>Score</th><th>Posted by:</th></tr>
-    </thead>
-  <tbody>
-  <% for(let x in questions){
-
-  %>
-  <tr>
-    <td><a href="/questions/get/<%= x%>"><%= questions[x].Title %></a></td>
-    <td><%= questions[x].Score%></td>
-    <td><%=questions[x].OwnerUserId%></td>
-  </tr>
-  <%}%>
-  </tbody>
-  </table>
-
   <%
   }}
   %>
-
-
-
-
-  <footer>
-    <a href="/about" class="nav_link">About</a>
-
-  </footer>
-  </body>
+</div>
+<footer style="position:fixed; bottom: 0;">
+  <a href="/about" class="nav_link" style="margin: 0 auto">About</a>
+</footer>
+</body>
 </html>
