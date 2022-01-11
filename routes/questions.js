@@ -16,7 +16,7 @@ router.get('/questionClap/(:id)', function (req, res, next) {
 
     fs.readFile('DB/questions.json', function (err, data) {
 
-
+        data = data.toString().replaceAll(/\r|\n/g, '');
         let questions = JSON.parse(data);
 
         let questionScore = parseInt(questions[req.params.id].Score);
@@ -42,7 +42,7 @@ router.get('/answerClap/(:id)', function (req, res, next) {
 
     fs.readFile('DB/answers.json', function (err, data) {
 
-
+        data = data.toString().replaceAll(/\r|\n/g, '');
         let paramarray = req.params.id.toString().split('&');
         let aid = paramarray[0];
         let qid = paramarray[1];
@@ -71,14 +71,14 @@ router.get('/get/(:id)', function (req, res, next) {
 
     let reqQuestion;
     fs.readFile('DB/questions.json', function (err, data) {
-
+        data = data.toString().replaceAll(/\r|\n/g, '');
         let questions = JSON.parse(data);
         reqQuestion = questions[req.params.id];
 
 
         let reqAnswers = JSON.parse("{}");
         fs.readFile('DB/answers.json', function (err, data) {
-
+            data = data.toString().replaceAll(/\r|\n/g, '');
             // if(data[0] !== 91){
             //     data = '['+data+']';
             // }
@@ -132,17 +132,8 @@ router.post('/new', function (req, res, next) {
         res.render('new', {message: 'Please fill out the whole form', currentuser: user});
     } else {
         fs.readFile('DB/questions.json', function (err, data) {
+            data = data.toString().replaceAll(/\r|\n/g, '');
 
-            // if (data.length == 0) {
-            //     data = "[]";
-            //     fs.writeFile("DB/questions.json", data, (err) => {
-            //
-            //         if (err) {
-            //             throw err;
-            //         }
-            //
-            //     });
-            // }
 
             let questions = JSON.parse(data);
             let date = new Date(3600000 * Math.floor(Date.now() / 3600000));
@@ -192,7 +183,7 @@ router.post('/answer/(:id)', function (req, res, next) {
     } else {
         fs.readFile('DB/answers.json', function (err, data) {
 
-
+            data = data.toString().replaceAll(/\r|\n/g, '');
             // if (data.length == 0) {
             //     data = "[]";
             //     fs.writeFile("DB/answers.json", data, (err) => {

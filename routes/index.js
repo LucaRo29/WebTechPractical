@@ -17,31 +17,38 @@ router.get('/', function (req, res, next) {
                     }
                 });
             }
+            data = data.toString().replaceAll(/\r|\n/g, '');
             // if (data[0] !== 91) {
             //     data = '[' + data + ']';
             // }
 
+            let datastring = data;
+            datastring = '[' + datastring + ']'
+            datastring = datastring.replaceAll('"  },  "', '"}},{"')
+            let questions_sorted = JSON.parse(datastring);
 
-            let questions_sorted = JSON.parse(data);
-            let id = Object.keys(questions_sorted).length
-            test = questions_sorted[0];
+            // let questions = JSON.parse(data);
+            // let id = Object.keys(questions_sorted).length
+            // test = questions_sorted[0];
             // questions_sorted[questions_sorted.length] = questions_sorted[0];
             // questions_sorted[4]= questions_sorted[0];
 
-           // questions_sorted.push(questions_sorted[0]);
+            // questions_sorted.push(questions_sorted[0]);
 
-            // questions_sorted.sort(function (a, b) {
-            //     let keya = Object.keys(a);
-            //     let keyb = Object.keys(b);
-            //     return b[keyb].Score - a[keya].Score;
-            // });
+            questions_sorted.sort(function (a, b) {
+                let keya = Object.keys(a);
+                let keyb = Object.keys(b);
+                return b[keyb].Score - a[keya].Score;
+            });
+
 
             let top5 = JSON.parse("{}");
 
-            if(Object.keys(questions_sorted).length != 0){
+            if (Object.keys(questions_sorted).length != 0) {
 
                 for (let i = 0; i < 5; i++) {
-                    top5[i]=questions_sorted[i];
+                    let id = Object.keys(questions_sorted[i])[0]
+                    top5[id] = questions_sorted[i][id];
                 }
 
 
